@@ -2,15 +2,13 @@ import { Canvas } from "@react-three/fiber";
 
 const App = () => {
   return (
-    <div>
-      <Canvas>
-        <mesh>
-          <ambientLight />
-          <boxGeometry />
-          <meshBasicMaterial color="red" />
-        </mesh>
-      </Canvas>
-    </div>
+    <Canvas camera={{ position: [2, 2, 2] }}>
+      <mesh>
+        <directionalLight intensity={1} position={[2, 3, 3]} />
+        <boxGeometry />
+        <meshBasicMaterial color="red" wireframe={true} />
+      </mesh>
+    </Canvas>
   );
 };
 
