@@ -1,28 +1,37 @@
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { OrbitControls, useTexture } from "@react-three/drei";
 
-// 1. Component name ko Capitalize kiya (Model)
-const Model = () => {
-  // 2. GLTF object se scene ko destructure kar liya
-  const { scene } = useGLTF("./modle.glb");
+const Box = () => {
+  // Object passing style for multiple maps
+  const texture = useTexture({
+    map: "/color.jpg",
+    roughnessMap: "/tiles_0133_preview.jpg",
+    metalnessMap: "/title.png",
+  });
 
-  return <primitive object={scene} scale={0.2} position={[3, 0, 0]} />;
+  return (
+    <mesh scale={1.5}>
+      <boxGeometry args={[2, 2, 2]} />
+      <meshStandardMaterial {...texture} />
+    </mesh>
+  );
 };
 
-const App = () => {
+export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
-      <Canvas camera={{ position: [0, 0, 5] }}>
-        <color args={["#222222"]} attach="background" />
-        <ambientLight intensity={1} />
-        <directionalLight position={[5, 5, 5]} />
+      <Canvas camera={{ position: [0, 0, 6] }}>
+        <ambientLight intensity={0.8} />
+        <directionalLight position={[5, 5, 5]} intensity={1.5} />
 
-        {/* Capitalized component call */}
-        <Model />
+        {/* Suspense zaroori hai */}
+        <Suspense fallback={null}>
+          <Box />
+        </Suspense>
+
         <OrbitControls makeDefault />
       </Canvas>
     </div>
   );
-};
-
-export default App;
+}
