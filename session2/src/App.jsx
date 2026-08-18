@@ -11,7 +11,7 @@ const Scene = () => {
     <>
       <directionalLight ref={dirLight} position={[0, 2, 2]} />
       <mesh>
-        <boxGeometry args={[2, 2, 2]} />
+        <boxGeometry args={[22, 2, 2]} />
         <meshStandardMaterial
           color={"#f04f2f"}
           metalness={0.9}
