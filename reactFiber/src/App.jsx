@@ -1,30 +1,26 @@
-import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 
 const Box = () => {
-  const ref = useRef();
-  useFrame((state, delta) => {
-    const target = state.mouse.x * 2;
-    ref.current.position.x += (target - ref.current.position.x) * delta * 10;
-  });
-
   return (
-    <>
-      <mesh ref={ref}>
-        <boxGeometry />
-        <meshBasicMaterial color="orange" />
-      </mesh>
-      ;
-    </>
+    // boxGeometry me args={[width, height, depth]} se size bara hoga
+    <mesh>
+      <boxGeometry />
+      <meshBasicMaterial color="orange" />
+    </mesh>
   );
 };
 
 const App = () => {
   return (
-    <Canvas>
-      <ambientLight intensity={0.9} />
-      <Box />
-    </Canvas>
+    // Canvas container ki height aur width hamesha parent element se aati hai
+    <div style={{ width: "100vw", height: "100vh" }}>
+      <Canvas>
+        <ambientLight intensity={0.5} />
+        <Box />
+        <OrbitControls />
+      </Canvas>
+    </div>
   );
 };
 
