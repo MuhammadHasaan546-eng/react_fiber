@@ -1,26 +1,34 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment } from "@react-three/drei";
+import * as THREE from "three";
+import { OrbitControls, useHelper } from "@react-three/drei";
+import { useRef } from "react";
+
+const Scene = () => {
+  const dirLight = useRef(null);
+  useHelper(dirLight, THREE.DirectionalLightHelper, 1);
+  return (
+    <>
+      <directionalLight ref={dirLight} position={[0, 2, 2]} />
+      <mesh>
+        <boxGeometry args={[2, 2, 2]} />
+        <meshStandardMaterial
+          color={"#f04f2f"}
+          metalness={0.9}
+          roughness={0.1}
+        />
+      </mesh>
+      <OrbitControls />
+    </>
+  );
+};
 
 export default function App() {
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
-      {/* 1. Canvas me 'shadows' prop add kiya */}
-      <Canvas shadows camera={{ position: [0, 0, 6] }}>
-        <ambientLight intensity={0.4} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[10, 10, 10]} />
-
-        <mesh>
-          <boxGeometry args={[2, 2, 2]} />
-          <meshStandardMaterial
-            color={"#f04f2f"}
-            metalness={0.9}
-            roughness={0.1}
-          />
-        </mesh>
-        <Environment files={"/Hdri.hdr"} background />
-        <OrbitControls />
+      <Canvas>
+        <ambientLight intensity={0.1} />
+        <Scene />
       </Canvas>
     </div>
   );
